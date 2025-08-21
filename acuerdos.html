@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Acuerdos de Cooperación</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{ --bg:#f7f8fa; --fg:#0f172a; --muted:#6b7280; --card:#ffffff; --br:#e5e7eb; --pri:#1f6feb; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+  .container{max-width:1100px;margin:0 auto;padding:24px}
+  header h1{margin:0 0 6px 0;font-size:32px;letter-spacing:-.02em}
+  header p{margin:0;color:var(--muted);font-size:14px}
+  .toolbar{display:grid;grid-template-columns:1fr repeat(5,minmax(0,1fr));gap:10px;margin:18px 0}
+  .toolbar input,.toolbar select{padding:10px 12px;border:1px solid var(--br);border-radius:10px;background:#fff;font-size:14px}
+  .toolbar .actions{grid-column:1 / -1;display:flex;gap:8px;flex-wrap:wrap}
+  .btn{border:1px solid var(--br);background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer;font-size:14px}
+  .btn.primary{background:var(--pri);color:#fff;border-color:var(--pri)}
+  .btn.ghost{background:transparent}
+  .stats{font-size:13px;color:var(--muted);margin-bottom:8px}
+  .group{background:var(--card);border:1px solid var(--br);border-radius:14px;margin:12px 0;overflow:hidden}
+  .group-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;cursor:pointer;background:#fff}
+  .group-title{display:flex;gap:10px;align-items:center}
+  .badge{font-size:12px;color:#fff;background:var(--pri);border-radius:999px;padding:2px 8px}
+  .chev{transition:.2s transform ease}
+  .group.collapsed .chev{transform:rotate(-90deg)}
+  .group-body{padding:10px 14px;border-top:1px solid var(--br)}
+  .list{display:grid;gap:8px}
+  .item{display:grid;grid-template-columns:1.2fr .8fr .6fr .6fr auto;gap:8px;padding:10px;border:1px solid var(--br);border-radius:10px;background:#fff}
+  .item h3{margin:0;font-size:15px}
+  .item small{color:var(--muted)}
+  .pill{font-size:12px;border:1px solid var(--br);border-radius:999px;padding:2px 8px;background:#fafafa}
+  .item a{color:var(--pri);text-decoration:none}
+  .more{margin-top:8px;display:flex;justify-content:center}
+  .empty{padding:18px;color:var(--muted);text-align:center}
+  @media (max-width:820px){ .item{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Acuerdos de Cooperación</h1>
+      <p>Fuente: Google Sheets • Vista agrupada por <strong>Clasificación</strong> (colapsada)</p>
+    </header>
+
+    <div class="toolbar">
+      <input id="q" placeholder="Buscar (país, contraparte, tipo, objetivos, N° doc.)…" />
+      <select id="fPais"><option value="">Todos los países</option></select>
+      <select id="fTipo"><option value="">Todos los tipos</option></select>
+      <select id="fClas"><option value="">Todas las clasificaciones</option></select>
+      <select id="orden">
+        <option value="fecha_desc">Fecha ↓</option>
+        <option value="fecha_asc">Fecha ↑</option>
+        <option value="nombre_asc">Contraparte A–Z</option>
+        <option value="nombre_desc">Contraparte Z–A</option>
+      </select>
+      <div></div>
+      <div class="actions">
+        <button class="btn" id="expandir">Expandir todo</button>
+        <button class="btn" id="contraer">Contraer todo</button>
+        <button class="btn ghost" id="limpiar">Limpiar filtros</button>
+      </div>
+    </div>
+
+    <div class="stats" id="stats">Cargando…</div>
+    <div id="mount"></div>
+  </div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbzkC59IlEF4OaUm58jhaR3AlDHMnFcReSGLbbtWhBD4SEz0ryJmOt7uwu4ozbnfR5oP/exec';
+
+const F = {
+  fecha: 'Fecha',
+  clasif: 'Clasificación',
+  pais: 'País',
+  contraparte: 'Contraparte',
+  vigencia: 'Vigencia',
+  tipo: 'Tipo',
+  objetivos: 'Objetivos',
+  nro: 'Numero de Documento',
+  link: 'Link del Acuerdo'
+};
+
+let DATA = [];
+let FILTERED = [];
+let GROUPS_STATE = new Map(); // clasificacion -> {open:boolean, shown:int}
+const PAGE_SIZE = 10;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+const uniq = a => [...new Set(a)];
+const parseDate = v => { const d = new Date(v); return isNaN(d) ? null : d; };
+const fmtDate = v => { const d = parseDate(v); return d ? d.toISOString().slice(0,10) : (v || '—'); };
+
+(async function init(){
+  try{
+    const res = await fetch(API_URL, { cache:'no-store' });
+    const { rows } = await res.json();
+    DATA = rows || [];
+    hidratarFiltros(DATA);
+    aplicarFiltros();
+  }catch(e){
+    console.error(e);
+    $('#stats').textContent = 'No se pudo leer la API.';
+  }
+})();
+
+function hidratarFiltros(rows){
+  const paises = uniq(rows.map(r=>r[F.pais]).filter(Boolean)).sort((a,b)=>a.localeCompare(b));
+  const tipos  = uniq(rows.map(r=>r[F.tipo]).filter(Boolean)).sort((a,b)=>a.localeCompare(b));
+  const clasif = uniq(rows.map(r=>r[F.clasif]).filter(Boolean)).sort((a,b)=>a.localeCompare(b));
+  fill('#fPais', paises); fill('#fTipo', tipos); fill('#fClas', clasif);
+}
+function fill(sel, items){
+  const el = $(sel);
+  items.forEach(v => { const o=document.createElement('option'); o.value=v; o.textContent=v; el.appendChild(o); });
+}
+
+function aplicarFiltros(){
+  const q = $('#q').value.trim().toLowerCase();
+  const fp = $('#fPais').value;
+  const ft = $('#fTipo').value;
+  const fc = $('#fClas').value;
+
+  FILTERED = DATA.filter(r=>{
+    const blob = `${r[F.pais]} ${r[F.contraparte]} ${r[F.tipo]} ${r[F.objetivos]} ${r[F.nro]}`.toLowerCase();
+    const okQ = !q || blob.includes(q);
+    const okP = !fp || r[F.pais] === fp;
+    const okT = !ft || r[F.tipo] === ft;
+    const okC = !fc || r[F.clasif] === fc;
+    return okQ && okP && okT && okC;
+  });
+
+  ordenar();
+  renderAgrupadoPorClasificacion();
+}
+
+function ordenar(){
+  const ord = $('#orden').value;
+  FILTERED.sort((a,b)=>{
+    if(ord === 'fecha_desc' || ord === 'fecha_asc'){
+      const da = parseDate(a[F.fecha]); const db = parseDate(b[F.fecha]);
+      const va = da ? da.getTime() : -Infinity;
+      const vb = db ? db.getTime() : -Infinity;
+      return ord==='fecha_desc' ? vb - va : va - vb;
+    }
+    const na = String(a[F.contraparte]||'').toLowerCase();
+    const nb = String(b[F.contraparte]||'').toLowerCase();
+    return ord==='nombre_asc' ? na.localeCompare(nb) : nb.localeCompare(na);
+  });
+}
+
+function renderAgrupadoPorClasificacion(){
+  const mount = $('#mount'); mount.innerHTML = '';
+  const total = FILTERED.length;
+  $('#stats').textContent = `Mostrando ${total} acuerdo(s) • ${new Set(FILTERED.map(r=>r[F.clasif])).size} clasificación(es)`;
+
+  if(!total){ mount.innerHTML = `<div class="empty">No hay resultados con los filtros aplicados.</div>`; return; }
+
+  // Agrupar por CLASIFICACIÓN
+  const byClas = {};
+  for(const r of FILTERED){
+    const k = r[F.clasif] || '—';
+    (byClas[k] ||= []).push(r);
+  }
+
+  Object.keys(byClas).sort((a,b)=>a.localeCompare(b)).forEach(clas=>{
+    const items = byClas[clas];
+    const state = GROUPS_STATE.get(clas) || { open:false, shown: Math.min(PAGE_SIZE, items.length) };
+
+    const group = document.createElement('section');
+    group.className = 'group' + (state.open ? '' : ' collapsed');
+
+    const header = document.createElement('div');
+    header.className = 'group-header';
+    header.innerHTML = `
+      <div class="group-title">
+        <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg>
+        <strong>${esc(clas)}</strong>
+        <span class="badge">${items.length}</span>
+      </div>
+      <span class="muted">${state.open ? 'Ocultar' : 'Mostrar'}</span>
+    `;
+    header.onclick = ()=>{
+      const open = group.classList.toggle('collapsed') ? false : true;
+      GROUPS_STATE.set(clas, { ...state, open });
+      renderAgrupadoPorClasificacion();
+    };
+
+    const body = document.createElement('div');
+    body.className = 'group-body';
+
+    const list = document.createElement('div');
+    list.className = 'list';
+
+    const toShow = items.slice(0, state.shown);
+    toShow.forEach(r=>{
+      const card = document.createElement('div');
+      card.className = 'item';
+      card.innerHTML = `
+        <div>
+          <h3>${esc(r[F.contraparte] || 'Sin título')}</h3>
+          <small>${esc(r[F.objetivos] || '')}</small>
+        </div>
+        <div><span class="pill">${esc(r[F.tipo] || '—')}</span></div>
+        <div><span class="pill">${esc(r[F.pais] || '—')}</span></div>
+        <div><small>Vigencia</small><br>${esc(r[F.vigencia] || '—')}</div>
+        <div>
+          <small>Fecha</small><br>${esc(fmtDate(r[F.fecha]))}
+          ${r[F.link] ? `<br><a href="${esc(r[F.link])}" target="_blank" rel="noopener">Abrir</a>` : ''}
+        </div>
+      `;
+      list.appendChild(card);
+    });
+
+    body.appendChild(list);
+
+    if(state.shown < items.length){
+      const more = document.createElement('div');
+      more.className = 'more';
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.textContent = 'Ver más';
+      btn.onclick = ()=>{
+        const next = Math.min(state.shown + PAGE_SIZE, items.length);
+        GROUPS_STATE.set(clas, { ...state, shown: next, open:true });
+        renderAgrupadoPorClasificacion();
+      };
+      more.appendChild(btn);
+      body.appendChild(more);
+    }
+
+    group.appendChild(header);
+    if(state.open) group.appendChild(body);
+    mount.appendChild(group);
+
+    GROUPS_STATE.set(clas, state);
+  });
+}
+
+// Eventos
+let t=null;
+$('#q').addEventListener('input', ()=>{ clearTimeout(t); t=setTimeout(aplicarFiltros, 200); });
+$('#fPais').addEventListener('change', aplicarFiltros);
+$('#fTipo').addEventListener('change', aplicarFiltros);
+$('#fClas').addEventListener('change', aplicarFiltros);
+$('#orden').addEventListener('change', ()=>{ ordenar(); renderAgrupadoPorClasificacion(); });
+
+$('#expandir').addEventListener('click', ()=>{
+  for(const [k,v] of GROUPS_STATE) GROUPS_STATE.set(k, { ...v, open:true });
+  renderAgrupadoPorClasificacion();
+});
+$('#contraer').addEventListener('click', ()=>{
+  for(const [k,v] of GROUPS_STATE) GROUPS_STATE.set(k, { ...v, open:false });
+  renderAgrupadoPorClasificacion();
+});
+$('#limpiar').addEventListener('click', ()=>{
+  $('#q').value=''; $('#fPais').value=''; $('#fTipo').value=''; $('#fClas').value='';
+  aplicarFiltros();
+});
+</script>
+</body>
+</html>
