@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Metodología – Impacto, Costos y ROI de Actividades de Promoción Comercial (ALADI/SEC/dt/557)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #0b1022;
+      --accent: #f5c400;
+      --accent-soft: rgba(245, 196, 0, 0.14);
+      --accent-strong: rgba(245, 196, 0, 0.22);
+      --text: #f5f5f7;
+      --muted: #c3c6d8;
+      --card: #101427;
+      --border: #262c49;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #141b3a 0, #050816 45%, #02030a 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    @media (max-width: 960px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      background: linear-gradient(180deg, #050816 0, #050816 40%, #050816ee 100%);
+      padding: 18px 18px 24px;
+    }
+
+    .logo-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: radial-gradient(circle at top left, var(--accent-soft), transparent 65%);
+      border: 1px solid rgba(245, 196, 0, 0.5);
+    }
+
+    .title-main {
+      font-size: 17px;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .subtitle-main {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav-block {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn span {
+      flex: 1;
+    }
+
+    .nav-btn::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      transform: translateX(2px);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .nav-btn.active::before {
+      background: var(--accent);
+    }
+
+    /* Main content */
+    .main {
+      padding: 22px 26px 40px;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+      .main {
+        padding: 16px;
+      }
+    }
+
+    .hero {
+      background: radial-gradient(circle at top left, var(--accent-soft), #070b1a);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(245, 196, 0, 0.4);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 22px 18px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-title {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .hero-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .hero-meta b {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(0, 0, 0, 0.22);
+      color: var(--muted);
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-quote {
+      border-radius: 16px;
+      background: rgba(3, 6, 22, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      padding: 12px 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hero-quote-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .hero-quote p {
+      font-size: 12px;
+    }
+
+    /* Sections & cards */
+    section {
+      margin-bottom: 26px;
+    }
+
+    .section-title-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 650;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card.accent {
+      border-color: rgba(245, 196, 0, 0.7);
+      background: linear-gradient(135deg, rgba(245, 196, 0, 0.10), #0b1022);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--muted);
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Details / accordions */
+    details {
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(7, 10, 30, 0.96);
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+    }
+
+    details[open] {
+      border-color: var(--accent-strong);
+      background: radial-gradient(circle at top left, var(--accent-soft), #080c21);
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .summary-label {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .summary-pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--muted);
+    }
+
+    .summary-title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .summary-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 11px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    details[open] .summary-icon {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    details > div {
+      margin-top: 8px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.16);
+      padding-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    details ul {
+      padding-left: 16px;
+      margin: 4px 0;
+    }
+
+    details li {
+      margin-bottom: 2px;
+    }
+
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 8px;
+    }
+
+    .phase-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .phase-pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--muted);
+      background: rgba(0, 0, 0, 0.26);
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+      margin-bottom: 6px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--muted);
+    }
+
+    .mono {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      padding: 6px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      margin-top: 4px;
+      overflow-x: auto;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 800px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: right;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Sidebar navigation -->
+    <aside class="sidebar">
+      <div class="logo-block">
+        <div class="pill">ALADI · Metodología</div>
+        <div class="title-main">
+          Análisis de Impacto, Costos y ROI de las Actividades de Promoción Comercial
+        </div>
+        <div class="subtitle-main">
+          Basado en ALADI/SEC/dt/557 (20 de noviembre de 2025) y mandato de la ALADI/CR/Resolución 503.
+        </div>
+      </div>
+
+      <div class="nav-block">
+        <div class="nav-label">Navegación</div>
+        <div class="nav-list">
+          <button class="nav-btn active" data-scroll="intro"><span>Introducción, Objetivo y Estructura</span></button>
+          <button class="nav-btn" data-scroll="clasificacion"><span>Clasificación de Actividades</span></button>
+          <button class="nav-btn" data-scroll="principios"><span>Principios Metodológicos Transversales</span></button>
+          <button class="nav-btn" data-scroll="categorias"><span>Exigencias por Categoría y Fase</span></button>
+          <button class="nav-btn" data-scroll="indicadores"><span>Indicadores Estandarizados</span></button>
+          <button class="nav-btn" data-scroll="roi"><span>Procedimiento de Cálculo del ROI</span></button>
+          <button class="nav-btn" data-scroll="formularios"><span>Formularios Estandarizados (Anexos)</span></button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+      <!-- Hero -->
+      <section id="intro" aria-label="Introducción y mandato">
+        <div class="hero">
+          <div class="hero-content">
+            <div>
+              <div class="pill">Mandato del Comité de Representantes</div>
+              <h1 class="hero-title">
+                Propuesta de metodología para el análisis del impacto, costos y retorno de inversión
+                de las actividades de promoción comercial
+              </h1>
+              <div class="hero-meta">
+                Documento de Trabajo <b>ALADI/SEC/dt/557</b> · Secretaría General · <b>20 de noviembre de 2025</b>
+              </div>
+              <div class="hero-badges">
+                <span class="badge">Planificación · Organización · Dirección · Difusión · Control · Evaluación</span>
+                <span class="badge">Impacto · Volumen de negocios · Costos · ROI</span>
+                <span class="badge">Aplicable a las cuatro categorías de actividades de promoción comercial</span>
+              </div>
+            </div>
+            <div class="hero-quote">
+              <div class="hero-quote-title">
+                Cumplimiento del Artículo Primero de la ALADI/CR/Resolución 503
+              </div>
+              <p>
+                La presente propuesta metodológica se elabora en cumplimiento del Artículo Primero de la
+                ALADI/CR/Resolución 503 del Comité de Representantes, mediante la cual los países miembros
+                encomendaron a la Secretaría General la preparación de una metodología estandarizada de
+                planificación, organización, dirección, difusión, control y evaluación de las actividades de
+                promoción comercial de la Asociación Latinoamericana de Integración (ALADI).
+              </p>
+              <div class="mono" style="margin-top:8px;">
+                La metodología debe permitir:<br />
+                • Medir el impacto de las actividades<br />
+                • Determinar el volumen de negocios generado o declarado<br />
+                • Identificar y desagregar el costo de cada actividad<br />
+                • Analizar, anualmente, el retorno de inversión (ROI) para decidir sobre la continuidad,
+                ajuste o reemplazo de las acciones de promoción comercial.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Introducción, Objetivo, Estructura -->
+        <div class="two-col" style="margin-top:14px;">
+          <div>
+            <details open>
+              <summary>
+                <div class="summary-label">
+                  <span class="summary-title">Introducción y antecedentes</span>
+                </div>
+                <span class="summary-icon">▼</span>
+              </summary>
+              <div>
+                <p>
+                  Desde el año 2014, la ALADI ha desarrollado diversas acciones de promoción comercial, entre
+                  ellas la EXPO ALADI, ruedas sectoriales, ruedas virtuales, actividades de difusión y
+                  participaciones institucionales en ruedas organizadas por países miembros.
+                </p>
+                <p style="margin-top:4px;">
+                  Hasta la aprobación de la ALADI/CR/Resolución 503, la evaluación de estas actividades se
+                  realizaba mediante informes individuales de cada evento, sin un marco metodológico común ni
+                  indicadores estandarizados.
+                </p>
+                <p style="margin-top:4px;">
+                  La metodología contenida en este documento sistematiza, coordina y uniformiza dichos
+                  procesos, constituyéndose en la primera herramienta integral para medir, de manera
+                  homogénea, los resultados de la promoción comercial en la ALADI.
+                </p>
+              </div>
+            </details>
+          </div>
+          <div>
+            <details open>
+              <summary>
+                <div class="summary-label">
+                  <span class="summary-title">Objetivos y estructura del documento</span>
+                </div>
+                <span class="summary-icon">▼</span>
+              </summary>
+              <div>
+                <p><b>Objetivos del documento</b></p>
+                <ul>
+                  <li>Establecer un marco metodológico único para todas las actividades de promoción comercial.</li>
+                  <li>
+                    Definir procedimientos comunes para la planificación, organización, dirección, difusión,
+                    control y evaluación.
+                  </li>
+                  <li>Fijar un conjunto de indicadores estandarizados, aplicables según la categoría de actividad.</li>
+                  <li>Precisar un procedimiento uniforme de cálculo del ROI.</li>
+                  <li>
+                    Determinar los momentos en que corresponde informar o solicitar aprobación al Grupo de
+                    Trabajo.
+                  </li>
+                  <li>
+                    Presentar formularios estandarizados para la planificación (Fase 1) y la evaluación (Fase 6),
+                    de uso obligatorio.
+                  </li>
+                </ul>
+                <p style="margin-top:6px;"><b>Estructura del documento (ALADI/SEC/dt/557)</b></p>
+                <ul>
+                  <li>1. Clasificación de las actividades de promoción comercial.</li>
+                  <li>2. Principios metodológicos transversales.</li>
+                  <li>3. Exigencias metodológicas por categoría de actividad.</li>
+                  <li>4. Indicadores estandarizados y procedimiento para el cálculo del ROI.</li>
+                  <li>5. Anexos: formularios estandarizados de planificación y evaluación.</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- Clasificación de actividades -->
+      <section id="clasificacion" aria-label="Clasificación de actividades de promoción comercial">
+        <div class="section-title-row">
+          <h2 class="section-title">1. Clasificación de actividades de promoción comercial</h2>
+          <p class="section-subtitle">Cuatro categorías que ordenan las modalidades existentes.</p>
+        </div>
+
+        <div class="card-grid">
+          <div class="card accent">
+            <div class="card-header">
+              <div class="card-title">Categoría 1 – Ruedas de negocios organizadas directamente por la ALADI</div>
+              <span class="tag">Sección 1</span>
+            </div>
+            <p class="small">
+              Incluye actividades tales como la EXPO ALADI y ruedas sectoriales en las que la Secretaría General
+              asume la organización integral de la rueda de negocios, la administración de la plataforma de citas y
+              la coordinación operativa.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                Categoría 2 – Participación institucional de la ALADI en ruedas organizadas por Países Miembros
+              </div>
+              <span class="tag">Sección 2</span>
+            </div>
+            <p class="small">
+              La ALADI participa como institución invitada o asociada en ruedas de negocios organizadas por los
+              países miembros, generalmente mediante un stand, presentaciones técnicas o presencia de funcionarios,
+              sin asumir la organización integral del evento.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                Categoría 3 – Ruedas de negocios coadyuvadas por la ALADI a solicitud de Países Miembros
+              </div>
+              <span class="tag">Sección 3</span>
+            </div>
+            <p class="small">
+              Actividades solicitadas por uno o más países miembros, en las cuales la ALADI presta apoyo técnico,
+              metodológico o tecnológico (por ejemplo, plataforma de citas o validación de empresas), sin ser el
+              organizador principal.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                Categoría 4 – Actividades de difusión y promoción del uso de los instrumentos de la ALADI
+              </div>
+              <span class="tag">Sección 4</span>
+            </div>
+            <p class="small">
+              Comprende seminarios, talleres, presentaciones técnicas y otras actividades centradas en la difusión
+              de acuerdos, mecanismos de integración y herramientas de la ALADI, con foco en la dimensión
+              institucional y de conocimiento, más que en la generación directa de negocios.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Principios metodológicos -->
+      <section id="principios" aria-label="Principios metodológicos transversales">
+        <div class="section-title-row">
+          <h2 class="section-title">2. Principios metodológicos transversales</h2>
+          <p class="section-subtitle">Criterios comunes que orientan las cuatro categorías y las seis fases.</p>
+        </div>
+
+        <div class="card">
+          <p class="small" style="margin-bottom:6px;">
+            Los principios metodológicos establecen criterios comunes para asegurar la pertinencia, eficiencia,
+            transparencia y coherencia institucional en todas las actividades de promoción comercial de la ALADI.
+          </p>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Principio 1</span>
+                <span class="summary-title">Pertinencia institucional</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                Toda actividad de promoción comercial deberá estar alineada con los objetivos de la ALADI, las
+                prioridades definidas por los países miembros y los mandatos vigentes. La pertinencia se evalúa en
+                función de su contribución a la integración regional, la diversificación de las exportaciones y el
+                fortalecimiento de las mipymes.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Principio 2</span>
+                <span class="summary-title">Especialización sectorial y foco en mipymes</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                Se priorizan sectores con potencial de integración productiva y comercio intrarregional, con énfasis
+                en la participación de mipymes. Las actividades deben identificar claramente los sectores y productos
+                involucrados, incluyendo códigos arancelarios.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Principio 3</span>
+                <span class="summary-title">Eficiencia en el uso de recursos</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La metodología busca optimizar el uso de recursos institucionales, evitando duplicaciones y
+                privilegiando modalidades que maximicen el impacto por unidad de costo. Se prioriza el uso de la
+                sede de la ALADI cuando las actividades son presenciales, salvo justificación en contrario.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Principio 4</span>
+                <span class="summary-title">Transparencia y trazabilidad</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                Se establecen formularios y procedimientos homogéneos que permiten rastrear decisiones, costos e
+                impactos en todas las fases, garantizando información verificable y comparable entre actividades.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Principio 5</span>
+                <span class="summary-title">Comparabilidad y estandarización</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                Los indicadores, formularios y fases se aplican de manera estandarizada para permitir comparaciones
+                entre años, categorías y modalidades, facilitando el análisis del impacto acumulado y las decisiones
+                de continuidad.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Principio 6</span>
+                <span class="summary-title">Enfoque en resultados y ROI</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                Toda actividad debe definir resultados esperados medibles y aportar información suficiente para
+                calcular el retorno de inversión (ROI) cuando corresponda, de acuerdo con la fórmula y reglas
+                metodológicas establecidas.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Exigencias por categoría y fase -->
+      <section id="categorias" aria-label="Exigencias metodológicas por categoría y fase">
+        <div class="section-title-row">
+          <h2 class="section-title">3. Exigencias metodológicas por categoría de actividad</h2>
+          <p class="section-subtitle">
+            Seis fases: Planificación, Organización, Dirección, Difusión, Control y Evaluación – y sus entregas al
+            Grupo de Trabajo.
+          </p>
+        </div>
+
+        <p class="small" style="margin-bottom:8px;">
+          A continuación se presenta un panel interactivo. Cada detalle combina una categoría con una de las seis fases
+          establecidas por la Resolución 503, incluyendo la descripción completa de lo que debe realizarse y lo que
+          debe informarse al Grupo de Trabajo.
+        </p>
+
+        <!-- Categoría 1 -->
+        <div class="phase-label">Sección 3.1 – Categoría 1: Ruedas de negocios organizadas directamente por la ALADI</div>
+        <div class="phase-grid">
+          <!-- C1 – Planificación -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 1</span>
+                <span class="summary-pill">Fase 1</span>
+                <span class="summary-title">Planificación</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p><b>Contenido de la planificación</b></p>
+              <p>
+                La planificación es una fase obligatoria y constituye el punto de partida para la aprobación y
+                posterior ejecución de la actividad. Deberá incluir:
+              </p>
+              <ul>
+                <li>
+                  Definición del objetivo de la actividad, alineado con las prioridades de promoción comercial
+                  establecidas por los países miembros.
+                </li>
+                <li>
+                  Especificación del alcance, detallando:
+                  <ul>
+                    <li>Modalidad (presencial, virtual o híbrida).</li>
+                    <li>Naturaleza (multisectorial o sectorial).</li>
+                    <li>
+                      Sectores involucrados, indicando la lista de productos o grupos de productos con sus códigos
+                      arancelarios correspondientes.
+                    </li>
+                    <li>Países miembros involucrados.</li>
+                  </ul>
+                </li>
+                <li>
+                  Resultados esperados, expresados en metas de participación empresarial, citas de negocios y
+                  oportunidades comerciales.
+                </li>
+                <li>Presupuesto estimado, con desagregación de costos por componente.</li>
+                <li>Cronograma completo, desde inscripciones hasta seguimiento posterior.</li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo en esta fase</b></p>
+              <ul>
+                <li>
+                  El documento de planificación completo se realizará según el <b>Anexo I</b> adjunto a este documento.
+                </li>
+                <li>
+                  La actividad no podrá avanzar a la siguiente fase sin la aprobación expresa del Grupo de Trabajo.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C1 – Organización -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 1</span>
+                <span class="summary-pill">Fase 2</span>
+                <span class="summary-title">Organización</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p><b>Contenido de la organización</b></p>
+              <p>
+                Una vez aprobada la planificación por el Grupo de Trabajo, la organización comprende:
+              </p>
+              <ul>
+                <li>Criterios de inscripción y validación de empresas compradoras y exportadoras.</li>
+                <li>
+                  Administración de la plataforma tecnológica, incluyendo registro, solicitud de citas y generación de
+                  agendas.
+                </li>
+                <li>
+                  Coordinación con las instituciones nacionales designadas por los países miembros para la difusión y
+                  validación de empresas.
+                </li>
+                <li>
+                  Procedimientos operativos, que incluyan atención a empresas, soporte técnico y mecanismos de solución
+                  de incidencias.
+                </li>
+                <li>
+                  Asignación de responsabilidades operativas dentro de la Secretaría General.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo en esta fase (cuando corresponda)</b></p>
+              <ul>
+                <li>
+                  Informe breve sobre el estado de la organización, especialmente si se producen ajustes que afecten lo
+                  aprobado en planificación.
+                </li>
+                <li>Información sobre problemas operativos o desvíos relevantes, si se presentan.</li>
+                <li>
+                  No se requiere presentación formal adicional cuando la organización avanza conforme a lo aprobado en
+                  planificación.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C1 – Dirección -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 1</span>
+                <span class="summary-pill">Fase 3</span>
+                <span class="summary-title">Dirección</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p><b>Contenido de la dirección</b></p>
+              <p>
+                La dirección corresponde a la ejecución directa del evento y comprende:
+              </p>
+              <ul>
+                <li>Supervisión del desarrollo de la actividad, conforme al cronograma aprobado.</li>
+                <li>
+                  Coordinación operativa continua, incluyendo ajustes necesarios en agendas, soporte técnico y atención
+                  a participantes.
+                </li>
+                <li>Gestión en tiempo real de las citas efectivas y del funcionamiento de la plataforma.</li>
+                <li>
+                  Comunicación interna con las instituciones nacionales participantes, cuando sea necesario.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Información puntual si surgen incidentes que afecten el normal desarrollo de la actividad.
+                </li>
+                <li>
+                  Notificación en caso de desviaciones significativas respecto del diseño aprobado. La dirección no
+                  requiere informes sistemáticos durante la ejecución, salvo eventos relevantes.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C1 – Difusión -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 1</span>
+                <span class="summary-pill">Fase 4</span>
+                <span class="summary-title">Difusión</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p><b>Contenido de la difusión</b></p>
+              <p>
+                La difusión tiene como objetivo garantizar el acceso equitativo a la información para todas las
+                empresas de los países miembros. Incluye:
+              </p>
+              <ul>
+                <li>
+                  Comunicación oportuna de los plazos, requisitos y sectores convocados.
+                </li>
+                <li>
+                  Uso de los canales institucionales de la ALADI y los mecanismos informativos de los países miembros.
+                </li>
+                <li>
+                  Información homogénea sobre procesos de inscripción, validación y participación.
+                </li>
+                <li>Publicación de los resultados generales de la actividad al finalizar el evento.</li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  No requiere presentaciones formales durante la difusión previa.
+                </li>
+                <li>
+                  La difusión de resultados se realiza a través del informe de evaluación previsto en la fase de
+                  evaluación.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C1 – Control -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 1</span>
+                <span class="summary-pill">Fase 5</span>
+                <span class="summary-title">Control</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p><b>Contenido del control</b></p>
+              <p>
+                El control verifica el cumplimiento de los aspectos críticos definidos en planificación y organización.
+                Incluye:
+              </p>
+              <ul>
+                <li>Verificación del cumplimiento de los compromisos asumidos por las empresas.</li>
+                <li>Revisión del cumplimiento de metas operativas (participación, citas, etc.).</li>
+                <li>
+                  Revisión del uso correcto de los recursos asignados a la actividad.
+                </li>
+                <li>Identificación de desviaciones, con aplicación de medidas correctivas según corresponda.</li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Notificación en caso de desviaciones relevantes en recursos, participación o funcionamiento operativo.
+                </li>
+                <li>Sin incidentes relevantes, no se requiere informe específico durante esta fase.</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C1 – Evaluación -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 1</span>
+                <span class="summary-pill">Fase 6</span>
+                <span class="summary-title">Evaluación</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p><b>Contenido de la evaluación</b></p>
+              <p>
+                La evaluación es obligatoria y constituye un insumo central para el análisis anual de la continuidad de
+                las actividades de promoción comercial. Incluye:
+              </p>
+              <ul>
+                <li>Medición del impacto, según los resultados reportados por los participantes.</li>
+                <li>Cuantificación del volumen de negocios, con base en la información declarada.</li>
+                <li>Determinación del costo total de la actividad.</li>
+                <li>
+                  Análisis comparativo entre impacto y costo, conforme a los indicadores establecidos y al cálculo del
+                  ROI.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Informe de evaluación completo, que deberá contener resultados de participación, citas, cifras
+                  declaradas de negocios, costos ejecutados, análisis metodológico y relación entre impacto y costo.
+                </li>
+              </ul>
+            </div>
+          </details>
+        </div>
+
+        <!-- Categoría 2 -->
+        <div class="phase-label" style="margin-top:14px;">
+          Sección 3.2 – Categoría 2: Participación de la ALADI en ruedas de negocios organizadas por Países Miembros
+        </div>
+        <div class="phase-grid">
+          <!-- C2 – Planificación -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 2</span>
+                <span class="summary-pill">Fase 1</span>
+                <span class="summary-title">Planificación</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La planificación se elabora cuando la ALADI recibe una invitación formal de un país miembro para
+                participar en una rueda de negocios organizada a nivel nacional. Deberá incluir:
+              </p>
+              <ul>
+                <li>
+                  Descripción de la actividad anfitriona, especificando país, institución organizadora y naturaleza del
+                  evento.
+                </li>
+                <li>
+                  Objetivo de la participación institucional de la ALADI, en el marco de la promoción comercial
+                  regional.
+                </li>
+                <li>
+                  Alcance de la participación, incluyendo:
+                  <ul>
+                    <li>Modalidad (presencial, virtual o híbrida).</li>
+                    <li>Tipo de presencia (stand, presentaciones técnicas, reuniones bilaterales, etc.).</li>
+                  </ul>
+                </li>
+                <li>Identificación de los mensajes y contenidos institucionales que se difundirán.</li>
+                <li>
+                  Estimación de costos para la ALADI (viajes, materiales, logística, etc.), cuando existan.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Presentación de la planificación para aprobación cuando se requiera compromiso de recursos o
+                  presencia institucional significativa.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C2 – Organización -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 2</span>
+                <span class="summary-pill">Fase 2</span>
+                <span class="summary-title">Organización</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La organización de la participación institucional de la ALADI comprende:
+              </p>
+              <ul>
+                <li>Coordinación con la institución organizadora del país anfitrión.</li>
+                <li>Preparación de materiales informativos y herramientas institucionales.</li>
+                <li>Definición de la agenda de reuniones y presentaciones de la ALADI.</li>
+                <li>
+                  Logística de desplazamiento, instalación y funcionamiento del stand o espacio institucional.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Actualización únicamente en caso de cambios significativos respecto de la planificación aprobada.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C2 – Dirección -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 2</span>
+                <span class="summary-pill">Fase 3</span>
+                <span class="summary-title">Dirección</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La dirección comprende la ejecución de la participación institucional durante el evento:
+              </p>
+              <ul>
+                <li>Atención del stand o espacio institucional.</li>
+                <li>Desarrollo de presentaciones técnicas y actividades previstas.</li>
+                <li>Relación con empresas, cámaras y autoridades participantes.</li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>Solo en caso de incidentes relevantes o desvíos significativos.</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C2 – Difusión -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 2</span>
+                <span class="summary-pill">Fase 4</span>
+                <span class="summary-title">Difusión</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La difusión en esta categoría se refiere a la comunicación institucional de la participación de la
+                ALADI:
+              </p>
+              <ul>
+                <li>Difusión previa de la participación en los canales institucionales.</li>
+                <li>
+                  Difusión posterior, destacando los resultados institucionales obtenidos y los temas tratados.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C2 – Control -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 2</span>
+                <span class="summary-pill">Fase 5</span>
+                <span class="summary-title">Control</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                El control se orienta a verificar:
+              </p>
+              <ul>
+                <li>El cumplimiento de los objetivos de la participación institucional.</li>
+                <li>La efectiva presencia y ejecución de las actividades previstas.</li>
+                <li>El cumplimiento de los procedimientos internos de la Secretaría General.</li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>Solo en caso de desvíos significativos.</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C2 – Evaluación -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 2</span>
+                <span class="summary-pill">Fase 6</span>
+                <span class="summary-title">Evaluación</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La evaluación de la participación institucional en ruedas organizadas por los países miembros deberá
+                incluir:
+              </p>
+              <ul>
+                <li>
+                  Resumen de la actividad, incluyendo información del país anfitrión y del objetivo institucional
+                  cumplido.
+                </li>
+                <li>Número de empresas atendidas, cuando aplique.</li>
+                <li>
+                  Consultas recibidas y temas tratados, particularmente en materia de acuerdos comerciales y
+                  herramientas de la ALADI.
+                </li>
+                <li>Costos ejecutados, de acuerdo con los rubros aprobados.</li>
+                <li>
+                  Análisis del valor institucional de la participación, en línea con los objetivos del Programa Anual
+                  de Actividades.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Informe de evaluación completo, cuando la actividad haya generado costos institucionales o compromisos
+                  operativos relevantes.
+                </li>
+              </ul>
+            </div>
+          </details>
+        </div>
+
+        <!-- Categoría 3 -->
+        <div class="phase-label" style="margin-top:14px;">
+          Sección 3.3 – Categoría 3: Ruedas de negocios coadyuvadas por la ALADI a solicitud de Países Miembros
+        </div>
+        <div class="phase-grid">
+          <!-- C3 – Planificación -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 3</span>
+                <span class="summary-pill">Fase 1</span>
+                <span class="summary-title">Planificación</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La planificación de una actividad coadyuvada se inicia únicamente a partir de una solicitud formal de
+                un país miembro. En esta fase, la Secretaría General deberá preparar un documento de planificación que
+                incluya:
+              </p>
+              <ul>
+                <li>
+                  Identificación del país solicitante y de la institución nacional responsable del evento.
+                </li>
+                <li>
+                  Descripción de la actividad propuesta, indicando sectores involucrados, modalidad (presencial, virtual
+                  o híbrida) y alcance geográfico (dos o más países).
+                </li>
+                <li>
+                  Objetivo de la colaboración de la ALADI, especificando claramente la naturaleza del apoyo requerido:
+                  soporte metodológico, soporte tecnológico (plataforma), validación de empresas, lineamientos
+                  operativos, participación técnica.
+                </li>
+                <li>
+                  Sectores y productos involucrados, incluyendo lista de códigos arancelarios cuando corresponda.
+                </li>
+                <li>
+                  Identificación precisa de los componentes a cargo del país solicitante, que normalmente deberá cubrir
+                  la mayor parte de los costos.
+                </li>
+                <li>
+                  Presupuesto estimado de los componentes a cargo de la ALADI, únicamente respecto de los rubros
+                  necesarios para la colaboración.
+                </li>
+                <li>
+                  Justificación de pertinencia, indicando por qué la participación de la ALADI agrega valor
+                  institucional y por qué la actividad es coherente con los objetivos de promoción comercial.
+                </li>
+                <li>
+                  Aplicación del principio de eficiencia: si la actividad es presencial, se priorizará su realización en
+                  la sede de la ALADI, salvo justificación del país solicitante.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Documento de planificación completo, para aprobación previa de los aspectos que impliquen recursos
+                  institucionales, compromisos operativos o apoyo tecnológico.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C3 – Organización -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 3</span>
+                <span class="summary-pill">Fase 2</span>
+                <span class="summary-title">Organización</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                Una vez aprobada la planificación, la organización deberá centrarse exclusivamente en los componentes
+                que la ALADI se comprometió a coadyuvar. Incluye:
+              </p>
+              <ul>
+                <li>Coordinación permanente con la institución nacional responsable.</li>
+                <li>
+                  Definición de roles:
+                  <ul>
+                    <li>El país solicitante organiza la actividad.</li>
+                    <li>La ALADI coadyuva en los componentes aprobados.</li>
+                  </ul>
+                </li>
+                <li>
+                  Implementación del soporte técnico (por ejemplo, plataforma), cuando sea parte del apoyo solicitado.
+                </li>
+                <li>
+                  Validación de empresas, si esta función es transferida a la Secretaría General.
+                </li>
+                <li>
+                  Actualización al Grupo de Trabajo solo en caso de modificaciones sustanciales al alcance aprobado.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Notificación únicamente si surgen cambios relevantes en el alcance aprobado.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C3 – Dirección -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 3</span>
+                <span class="summary-pill">Fase 3</span>
+                <span class="summary-title">Dirección</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La dirección de la ALADI en esta categoría se limita a los componentes bajo su responsabilidad.
+                Comprende:
+              </p>
+              <ul>
+                <li>
+                  Supervisión de los elementos coadyuvados, asegurando que la contribución institucional sea ejecutada
+                  de acuerdo con lo aprobado.
+                </li>
+                <li>
+                  Soporte técnico durante el evento, cuando la ALADI administra la plataforma o procesos digitales.
+                </li>
+                <li>
+                  Participación institucional, cuando se haya previsto asistencia técnica o presentaciones.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Solo en caso de incidentes operativos que afecten la contribución de la ALADI.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C3 – Difusión -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 3</span>
+                <span class="summary-pill">Fase 4</span>
+                <span class="summary-title">Difusión</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La difusión se realizará respecto del rol institucional de la ALADI, considerando que la organización
+                corresponde al país solicitante. Incluye:
+              </p>
+              <ul>
+                <li>Publicación institucional de la participación de la ALADI.</li>
+                <li>
+                  Coordinación con el país solicitante sobre mensajes o materiales que incluyan referencia a la
+                  Asociación.
+                </li>
+                <li>Difusión posterior de los resultados institucionales obtenidos.</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C3 – Control -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 3</span>
+                <span class="summary-pill">Fase 5</span>
+                <span class="summary-title">Control</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                El control se centra en los componentes coadyuvados por la ALADI, verificando:
+              </p>
+              <ul>
+                <li>El cumplimiento de los compromisos asumidos en la planificación.</li>
+                <li>La correcta ejecución técnica del soporte proporcionado.</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C3 – Evaluación -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 3</span>
+                <span class="summary-pill">Fase 6</span>
+                <span class="summary-title">Evaluación</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La evaluación de las ruedas coadyuvadas debe integrar:
+              </p>
+              <ul>
+                <li>
+                  Información consolidada de la actividad, según datos oficiales del país solicitante.
+                </li>
+                <li>
+                  Resultados de las empresas apoyadas a través de la intervención de la ALADI.
+                </li>
+                <li>
+                  Costo de los componentes a cargo de la ALADI y análisis de su pertinencia e impacto.
+                </li>
+              </ul>
+            </div>
+          </details>
+        </div>
+
+        <!-- Categoría 4 -->
+        <div class="phase-label" style="margin-top:14px;">
+          Sección 3.4 – Categoría 4: Actividades de difusión y promoción del uso de los instrumentos de la ALADI
+        </div>
+        <div class="phase-grid">
+          <!-- C4 – Planificación -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 4</span>
+                <span class="summary-pill">Fase 1</span>
+                <span class="summary-title">Planificación</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La planificación de actividades de difusión deberá definir:
+              </p>
+              <ul>
+                <li>Objetivos de difusión (instrumentos, acuerdos, herramientas).</li>
+                <li>Perfil del público objetivo (empresas, cámaras, agencias, universidades, etc.).</li>
+                <li>Formato (taller, seminario, presentación, webinario, etc.).</li>
+                <li>Modalidad (presencial, virtual, híbrida) y alcance (países o subregiones).</li>
+                <li>Presupuesto y recursos requeridos, cuando existan costos asociados.</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C4 – Organización -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 4</span>
+                <span class="summary-pill">Fase 2</span>
+                <span class="summary-title">Organización</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La organización comprende:
+              </p>
+              <ul>
+                <li>Coordinación con contrapartes nacionales o regionales.</li>
+                <li>Definición de agenda, ponentes y materiales a presentar.</li>
+                <li>Gestión de la plataforma técnica (en caso de modalidad virtual o híbrida).</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C4 – Dirección -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 4</span>
+                <span class="summary-pill">Fase 3</span>
+                <span class="summary-title">Dirección</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La dirección consiste en:
+              </p>
+              <ul>
+                <li>Ejecutar la presentación o actividad técnica conforme al contenido validado.</li>
+                <li>Atender consultas de los participantes, dentro del ámbito de competencia institucional.</li>
+                <li>
+                  Registrar internamente a los asistentes o instituciones participantes, cuando sea pertinente.
+                </li>
+                <li>Gestionar técnicamente la actividad, especialmente en modalidad virtual o híbrida.</li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>Solo si ocurren incidencias que afecten el cumplimiento de la actividad.</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C4 – Difusión -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 4</span>
+                <span class="summary-pill">Fase 4</span>
+                <span class="summary-title">Difusión</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La difusión en esta categoría es parte tanto de la convocatoria como de la visibilidad institucional
+                posterior. Incluye:
+              </p>
+              <ul>
+                <li>Convocatoria previa, utilizando los canales institucionales establecidos.</li>
+                <li>Difusión posterior de materiales, cuando corresponda.</li>
+                <li>
+                  Difusión institucional del resultado general de la actividad, de acuerdo con los lineamientos
+                  vigentes.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  La información se integrará en el informe de evaluación anual, sin requerir reportes específicos en
+                  esta fase.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C4 – Control -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 4</span>
+                <span class="summary-pill">Fase 5</span>
+                <span class="summary-title">Control</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                El control deberá verificar:
+              </p>
+              <ul>
+                <li>El cumplimiento del contenido previsto, según lo definido en la planificación.</li>
+                <li>La correcta ejecución técnica del evento.</li>
+                <li>El uso adecuado de los recursos, cuando existan costos asociados.</li>
+                <li>El registro adecuado de la participación, si corresponde.</li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>
+                  Solo en caso de desviaciones significativas o requerimientos adicionales.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- C4 – Evaluación -->
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-pill">Cat. 4</span>
+                <span class="summary-pill">Fase 6</span>
+                <span class="summary-title">Evaluación</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                La evaluación deberá centrarse en criterios institucionales y de alcance, no comerciales. Incluirá:
+              </p>
+              <ul>
+                <li>Número de participantes o instituciones atendidas.</li>
+                <li>
+                  Perfil del público alcanzado (empresas, cámaras, agencias, universidades, etc.).
+                </li>
+                <li>
+                  Valoración general de la actividad, cuando se utilicen instrumentos breves de retroalimentación.
+                </li>
+                <li>Costos ejecutados, si los hubiera.</li>
+                <li>
+                  Relevancia institucional de la actividad realizada y su contribución a los objetivos de promoción
+                  comercial.
+                </li>
+              </ul>
+              <p><b>Entrega al Grupo de Trabajo</b></p>
+              <ul>
+                <li>Informe de evaluación breve, integrado al informe anual comparativo.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Indicadores estandarizados -->
+      <section id="indicadores" aria-label="Indicadores estandarizados">
+        <div class="section-title-row">
+          <h2 class="section-title">4. Indicadores estandarizados</h2>
+          <p class="section-subtitle">
+            Conjunto homogéneo de indicadores para medir impacto, volumen de negocios, costos y desempeño operativo.
+          </p>
+        </div>
+
+        <div class="card">
+          <p class="small" style="margin-bottom:8px;">
+            En cumplimiento del Artículo Primero de la ALADI/CR/Resolución 503, el documento establece un conjunto de
+            indicadores estandarizados aplicables a todas las actividades de promoción comercial, así como un
+            procedimiento uniforme para el cálculo del retorno de inversión (ROI). Los indicadores se estructuran en
+            cuatro grupos:
+          </p>
+
+          <div class="chip-row">
+            <span class="chip">a) Indicadores operativos</span>
+            <span class="chip">b) Indicadores comerciales</span>
+            <span class="chip">c) Indicadores institucionales</span>
+            <span class="chip">d) Indicadores de costos</span>
+          </div>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-title">a) Indicadores operativos</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>Permiten medir la magnitud y desempeño operativo de una actividad.</p>
+              <p><b>Para ruedas de negocios organizadas por la ALADI (Categoría 1):</b></p>
+              <ul>
+                <li>Empresas registradas.</li>
+                <li>Empresas confirmadas.</li>
+                <li>Empresas asistentes.</li>
+              </ul>
+              <p><b>Para ruedas coadyuvadas (Categoría 3):</b></p>
+              <ul>
+                <li>Empresas participantes en los componentes apoyados por la ALADI.</li>
+              </ul>
+              <p><b>Para actividades de difusión (Categoría 4):</b></p>
+              <ul>
+                <li>Número de asistentes.</li>
+                <li>Número de instituciones alcanzadas.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-title">b) Indicadores comerciales</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>Evalúan el volumen de negocios declarado y la intensidad comercial:</p>
+              <ul>
+                <li>Intenciones de negocio declaradas (USD).</li>
+                <li>Intención promedio por cita (USD).</li>
+                <li>Distribución por sector.</li>
+                <li>Distribución por país, cuando corresponda.</li>
+              </ul>
+              <p>
+                Para Categoría 3 (ruedas apoyadas), se utilizan las intenciones de negocio declaradas por el país
+                solicitante, cuando existan datos.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-title">c) Indicadores institucionales</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>Evalúan la calidad institucional y la coherencia con lo aprobado:</p>
+              <ul>
+                <li>Cumplimiento del cronograma.</li>
+                <li>Cumplimiento de las funciones asignadas a la ALADI.</li>
+                <li>Eficiencia operativa de los componentes a cargo de la Secretaría.</li>
+                <li>Pertinencia institucional de la actividad.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-title">d) Indicadores de costos</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>Aplicables a todas las actividades con gasto institucional:</p>
+              <ul>
+                <li>Costo total ejecutado (USD).</li>
+                <li>Costo por empresa participante.</li>
+                <li>Costo por cita efectiva (Categorías 1 y 3, cuando existan citas).</li>
+                <li>Costo por participante (Categoría 4).</li>
+                <li>Distribución de costos por rubro.</li>
+                <li>Identificación de la fuente que cubre cada costo (ALADI, país sede, patrocinios).</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- ROI -->
+      <section id="roi" aria-label="Procedimiento para el cálculo del ROI">
+        <div class="section-title-row">
+          <h2 class="section-title">4.2. Procedimiento para el cálculo del Retorno de Inversión (ROI)</h2>
+          <p class="section-subtitle">Relación entre impacto comercial declarado y costo total ejecutado.</p>
+        </div>
+
+        <div class="card">
+          <p class="small" style="margin-bottom:6px;">
+            El retorno de inversión (ROI) se utiliza para medir la relación entre el impacto comercial declarado y el
+            costo total ejecutado. Este cálculo es obligatorio para todas las actividades que generen intenciones de
+            negocio.
+          </p>
+
+          <details open>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-title">Fórmula del ROI y alcance</span>
+              </div>
+              <span class="summary-icon">▼</span>
+            </summary>
+            <div>
+              <p><b>Fórmula del ROI</b></p>
+              <div class="mono">
+                ROI = Intenciones de negocio declaradas (USD)<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ Costo total ejecutado (USD)
+              </div>
+              <p style="margin-top:6px;"><b>Actividades a las que se aplica</b></p>
+              <ul>
+                <li>Categoría 1 (ruedas organizadas por la ALADI).</li>
+                <li>
+                  Categoría 3 (ruedas coadyuvadas por la ALADI), siempre que el país solicitante proporcione información
+                  oficial sobre intenciones de negocio.
+                </li>
+              </ul>
+              <p><b>No se aplica ROI a:</b></p>
+              <ul>
+                <li>Categoría 2 (participación institucional).</li>
+                <li>
+                  Categoría 4 (difusión), porque no generan intenciones de negocio ni citas comparables.
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-title">Reglas metodológicas e interpretación</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p><b>Reglas metodológicas para el cálculo</b></p>
+              <ul>
+                <li>
+                  Solo se utilizarán intenciones declaradas en formularios oficiales y consolidadas por la Secretaría
+                  General.
+                </li>
+                <li>
+                  El costo total ejecutado incluirá únicamente los rubros aprobados en la planificación.
+                </li>
+                <li>
+                  En ruedas coadyuvadas, el ROI se calculará únicamente con datos proporcionados oficialmente por el
+                  país solicitante.
+                </li>
+                <li>
+                  Todos los ROI deberán presentarse en el Informe de Evaluación (Fase 6) y en el informe anual
+                  comparativo.
+                </li>
+              </ul>
+              <p><b>Interpretación general del ROI</b></p>
+              <ul>
+                <li>ROI &gt; 1: la actividad declaró intenciones superiores al costo ejecutado.</li>
+                <li>ROI entre 1 y 5: impacto moderado, a evaluar según sector.</li>
+                <li>ROI entre 6 y 10: impacto alto.</li>
+                <li>ROI &gt; 10: impacto muy significativo.</li>
+                <li>ROI &lt; 5: impacto bajo, requiere análisis de pertinencia.</li>
+              </ul>
+              <p class="small">
+                La interpretación final corresponde a la consideración de los países miembros, teniendo en cuenta la
+                naturaleza del evento, su escala, los sectores involucrados y los objetivos institucionales.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-label">
+                <span class="summary-title">Uso del ROI para la revisión anual</span>
+              </div>
+              <span class="summary-icon">+</span>
+            </summary>
+            <div>
+              <p>
+                El ROI será uno de los insumos técnicos para la decisión de continuidad. Deberá analizarse junto con:
+              </p>
+              <ul>
+                <li>Pertinencia institucional.</li>
+                <li>Costos relativos.</li>
+                <li>Alcance país-sector.</li>
+                <li>Participación empresarial.</li>
+                <li>Eficiencia operativa.</li>
+              </ul>
+              <p class="small">
+                La combinación de estos elementos constituye la base para que los países tomen decisiones informadas
+                sobre la continuidad, ajuste o reemplazo de las actividades de promoción comercial.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Formularios -->
+      <section id="formularios" aria-label="Formularios estandarizados">
+        <div class="section-title-row">
+          <h2 class="section-title">5. Anexos – Formularios estandarizados</h2>
+          <p class="section-subtitle">Instrumentos obligatorios de planificación (Fase 1) y evaluación (Fase 6).</p>
+        </div>
+
+        <div class="two-col">
+          <!-- Anexo I -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">5.1. Anexo I – Formulario estandarizado de planificación</div>
+              <span class="tag">Uso: Fase 1 · Categoría 1</span>
+            </div>
+            <p class="small">
+              Formulario que debe ser presentado a los países para la fase de planificación en las ruedas de negocios
+              organizadas directamente por la ALADI.
+            </p>
+
+            <details open>
+              <summary>
+                <div class="summary-label">
+                  <span class="summary-title">Estructura del formulario de planificación</span>
+                </div>
+                <span class="summary-icon">▼</span>
+              </summary>
+              <div>
+                <ol style="padding-left:16px;">
+                  <li>
+                    <b>Información general de la actividad</b><br />
+                    Nombre de la actividad; Naturaleza (Multisectorial / Sectorial); Modalidad (Presencial / Virtual /
+                    Híbrida); Fecha propuesta; Duración total; Lugar / Plataforma.
+                  </li>
+                  <li>
+                    <b>Objetivo de la actividad</b><br />
+                    (Describir brevemente el objetivo general de la rueda de negocios.)
+                  </li>
+                  <li>
+                    <b>Alcance de la actividad</b>
+                    <ul>
+                      <li>Sectores y productos (indicar sectores y códigos arancelarios).</li>
+                      <li>Países miembros participantes (convocatoria prevista).</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Resultados esperados (indicadores medibles)</b>
+                    <ul>
+                      <li>
+                        <b>Participación empresarial</b>: Empresas registradas (meta); empresas confirmadas (meta);
+                        empresas asistentes (meta); compradores; exportadores.
+                      </li>
+                      <li>
+                        <b>Citas de negocios</b>: Citas programadas (meta); citas efectivas (meta).
+                      </li>
+                      <li>
+                        <b>Resultados comerciales esperados</b>: Estimación de intenciones de negocio (USD); sectores con
+                        mayor generación prevista.
+                      </li>
+                      <li>
+                        <b>Otros resultados esperados</b>: participación estimada de mipymes (%); número de países con
+                        representación empresarial.
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Presupuesto estimado</b><br />
+                    Tabla de rubros con monto estimado (USD) y fuente de financiamiento (ALADI / País sede / Patrocinio),
+                    incluyendo como mínimo: locación, difusión y comunicación, financiamiento de compradores invitados,
+                    conferencistas/paneles técnicos, gastronomía (si aplica), gastos operativos, plataforma tecnológica;
+                    totales financiados por ALADI y por país sede.
+                  </li>
+                  <li>
+                    <b>Cronograma propuesto</b><br />
+                    Apertura de inscripciones; validación de empresas; programación de agendas; fecha del evento; cierre
+                    operativo; evaluación posterior.
+                  </li>
+                  <li>
+                    <b>Metodología operativa</b><br />
+                    Plataforma de registro y gestión de citas; procedimiento de validación de empresas; criterios de
+                    admisión; procedimientos de soporte y atención a participantes; estructura interna de coordinación.
+                  </li>
+                </ol>
+              </div>
+            </details>
+          </div>
+
+          <!-- Anexo II -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">5.2. Anexo II – Formulario estandarizado de Evaluación</div>
+              <span class="tag">Uso: Fase 6 · Categoría 1</span>
+            </div>
+            <p class="small">
+              Este formulario debe ser completado por la Secretaría General al finalizar una rueda de negocios
+              organizada directamente por la ALADI. Su objetivo es uniformizar la información que permitirá evaluar el
+              impacto, el volumen de negocios generado y los costos ejecutados de la actividad.
+            </p>
+
+            <details open>
+              <summary>
+                <div class="summary-label">
+                  <span class="summary-title">Estructura del formulario de evaluación</span>
+                </div>
+                <span class="summary-icon">▼</span>
+              </summary>
+              <div>
+                <ol style="padding-left:16px;">
+                  <li>
+                    <b>Información general de la actividad</b><br />
+                    Nombre de la actividad; fecha de realización; modalidad (Presencial / Virtual / Híbrida); naturaleza
+                    (Multisectorial / Sectorial); lugar / plataforma.
+                  </li>
+                  <li>
+                    <b>Participación empresarial</b><br />
+                    Empresas registradas; empresas confirmadas; empresas asistentes; compradores; exportadores.<br />
+                    <i>Nota: los datos deben reflejar cifras reales verificadas por la Secretaría General.</i>
+                  </li>
+                  <li>
+                    <b>Citas de negocios</b><br />
+                    Citas programadas; citas efectivas; tasa de realización (%) calculada como citas efectivas / citas
+                    programadas × 100.
+                  </li>
+                  <li>
+                    <b>Resultados comerciales declarados</b><br />
+                    Total de intenciones de negocio (USD); intención promedio por cita (USD), calculada como total de
+                    intenciones / citas con monto declarado; sectores con mayores intenciones declaradas; distribución
+                    por país.
+                  </li>
+                  <li>
+                    <b>Costos de la actividad</b><br />
+                    Tabla de costos ejecutados (USD) por rubro y quién cubrió cada costo (ALADI / País sede /
+                    Patrocinio), incluyendo al menos: locación (si corresponde), difusión y comunicación,
+                    financiamiento de compradores invitados, conferencistas/paneles técnicos, gastronomía (si
+                    corresponde), gastos operativos, plataforma tecnológica.
+                  </li>
+                  <li>
+                    <b>Cálculo del ROI</b><br />
+                    Inclusión de intenciones de negocio declaradas, costo total ejecutado y cálculo del ROI según la
+                    fórmula establecida, con breve interpretación.
+                  </li>
+                  <li>
+                    <b>Comentario metodológico y recomendaciones</b><br />
+                    Síntesis de lecciones aprendidas, sugerencias para próximas ediciones y análisis de pertinencia de
+                    la continuidad.
+                  </li>
+                </ol>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Esta interfaz reúne, de manera interactiva, el contenido esencial del documento ALADI/SEC/dt/557 para facilitar
+          su explicación a los países miembros.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Navegación lateral con scroll suave y estado activo
+    const navButtons = document.querySelectorAll(".nav-btn");
+
+    navButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.getAttribute("data-scroll");
+        const target = document.getElementById(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.getBoundingClientRect().top + window.scrollY - 16,
+            behavior: "smooth",
+          });
+        }
+      });
+    });
+
+    // Actualizar botón activo al hacer scroll
+    const sections = Array.from(document.querySelectorAll("section"));
+    const sectionMap = sections.reduce((acc, sec) => {
+      acc[sec.id] = sec;
+      return acc;
+    }, {});
+
+    function updateActiveNav() {
+      let currentId = sections[0]?.id;
+      const scrollPos = window.scrollY + 120;
+
+      sections.forEach((sec) => {
+        if (sec.offsetTop <= scrollPos) currentId = sec.id;
+      });
+
+      navButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.getAttribute("data-scroll") === currentId);
+      });
+    }
+
+    window.addEventListener("scroll", () => {
+      window.requestAnimationFrame(updateActiveNav);
+    });
+
+    updateActiveNav();
+  </script>
+</body>
+</html>
